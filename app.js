@@ -1,47 +1,59 @@
 const express = require('express'),
-bodyParser = require('body-parser');
+bodyParser = require('body-parser'),
+mongoose = require('mongoose');
+
 
 const date = require(__dirname + "/date.js"),
-inList = require(__dirname + "/is-in-list.js");
+app = express();
 
-const app = express();
 
+// express & body parser set up
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
-let tasks = [],
-workList = [];
+// connection to db
+const dbUrl = 'mongodb://localhost:27017/todolistDB';
+mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useCreateIndex', true);
+//to-do schema
+const Items = mongoose.Schema({
+    description: {
+        type: String,
+        require: true,
+        unique: true,
+        maxlength: 70,
+    }
+});
+
+// create model
+const Item = new mongoose.model("Item", Items);
+
 
 let day = date.day();
 
 app.get("/", (req, res) => {
-    res.render("index", {typeOfToDo:day, tasks:tasks});
-});
 
+    // get tasks array
+    Item.find({}, (err, tasks) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("index", {typeOfToDo:day, tasks:tasks});
+        }
+    });
+});
 
 
 app.post("/", (req, res) => {
     
     let listType = req.body.list,
-    task = req.body.taskInput;
+    task = new Item({
+        description: req.body.taskInput
+    });
+    task.save();
 
-    if(listType === "Work") {
-        if(inList(workList,task)){
-            res.redirect("/work");
-        } else {
-            workList.push(task);
-            res.redirect("/work")
-        }
-    } else {
-
-        if (inList(tasks,task)) {
-            res.redirect("/");
-        } else {
-            tasks.push(task);
-            res.redirect("/");
-        }
-    }
+    res.redirect("/");
 
 
 });
