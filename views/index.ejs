@@ -2,28 +2,38 @@
 <h1 class="h3 mb-3 font-weight-normal date">
     <%=typeOfToDo%>
 </h1>
-<form class="form-signin" action="/" method="post">
 
+<div class="forms-area form-signin">
 
-    <% if (tasks.length > 0) { %>
-    <% tasks.forEach(task => { %>
-    <div class="task-container">
-        <input type="checkbox" name="" id="">
-        <p class="task" style="display: inline-block;"><%= task.description%></p>
-    </div>
-    <% }); %>
-    <% } %>
+    <form action="/delete" method="post">
+    
+        <% if (tasks.length > 0) { %>
+            <% tasks.forEach(task => { %>
+                <div class="task-container">
+                    <input type="checkbox" name="checkbox" value="<%= task._id %>" onchange="this.form.submit()">
+                    <p class="task" style="display: inline-block;"><%= task.description%></p>
+                </div>
+            <% }); %>
+        <% } %>
+    
+    </form>
+    
+    
+    <form action="/" method="post">
+    
+        <div class="input-container">
+    
+            <input type="text" name="taskInput" id="taskInput" placeholder="New Item" class="form-control" required
+                autofocus autocomplete="off">
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="list" value=<%=typeOfToDo%>>+</button>
+    
+        </div>
+    
+    
+        <p class="mt-5 mb-3 text-muted">&copy; To-do List By Cristiano Napoleao</p>
+        
+</div>
 
-    <div class="input-container">
-
-        <input type="text" name="taskInput" id="taskInput" placeholder="New Item" class="form-control" required
-            autofocus autocomplete="off">
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="list" value=<%=typeOfToDo%>>+</button>
-
-    </div>
-
-
-    <p class="mt-5 mb-3 text-muted">&copy; To-do List By Cristiano Napoleao</p>
 
 </form>
 <%- include("footer") %>

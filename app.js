@@ -16,6 +16,8 @@ app.set('view engine', 'ejs');
 const dbUrl = 'mongodb://localhost:27017/todolistDB';
 mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
+
 //to-do schema
 const Items = mongoose.Schema({
     description: {
@@ -51,12 +53,26 @@ app.post("/", (req, res) => {
     task = new Item({
         description: req.body.taskInput
     });
+
     task.save();
 
     res.redirect("/");
 
 
 });
+
+app.post("/delete", (req, res) => {
+    let checkedItemId = req.body.checkbox;
+    Item.findByIdAndRemove(checkedItemId, (err) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Successfully deleted task");
+            res.redirect("/");
+        }
+    });
+});
+
 
 app.get("/work", (req, res) => {
     res.render("index", {typeOfToDo:"Work", tasks:workList});
