@@ -1,36 +1,49 @@
 const express = require('express'),
-bodyParser = require('body-parser'),
-mongoose = require('mongoose');
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose'),
+    _ = require('lodash');
+const {
+    startCase
+} = require('lodash');
 
 
 const date = require(__dirname + "/date.js"),
-app = express();
+    app = express();
 
 
 // express & body parser set up
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // connection to db
 const dbUrl = 'mongodb://localhost:27017/todolistDB';
-mongoose.connect(dbUrl, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
 
 //to-do schema
-const Items = mongoose.Schema({
+const itemsSchema = mongoose.Schema({
     description: {
         type: String,
-        require: true,
-        unique: true,
         maxlength: 70,
-    }
+    },
+
+});
+
+const listSchema = mongoose.Schema({
+    name: String,
+    lists: [itemsSchema],
 });
 
 // create model
-const Item = new mongoose.model("Item", Items);
-
+const Item = new mongoose.model("Item", itemsSchema);
+const Lists = new mongoose.model("List", listSchema);
 
 let day = date.day();
 
@@ -41,18 +54,21 @@ app.get("/", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("index", {typeOfToDo:day, tasks:tasks});
+            res.render("index", {
+                nameOfList: "Home",
+                tasks: tasks
+            });
         }
     });
 });
 
 
 app.post("/", (req, res) => {
-    
+
     let listType = req.body.list,
-    task = new Item({
-        description: req.body.taskInput
-    });
+        task = new Item({
+            description: req.body.taskInput,
+        });
 
     task.save();
 
@@ -74,11 +90,33 @@ app.post("/delete", (req, res) => {
 });
 
 
-app.get("/work", (req, res) => {
-    res.render("index", {typeOfToDo:"Work", tasks:workList});
+app.get("/:todoListName", (req, res) => {
+
+    let listName = _.lowerCase(req.params.todoListName);
+    
+    Lists.find({name:listName}, (err, list) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if (list.length > 0) {
+                res.render("index", {
+                    nameOfList: _.startCase(list[0].name),
+                    tasks: list[0].lists,
+                });
+            } else {
+                let newList = new Lists({
+                    name: listName,
+                    lists: [],
+                });
+                newList.save();
+                res.redirect(`/${listName}`);
+            }
+        }
+    });
+
 });
 
 
-app.listen(3000 || process.env.PORT , ()=> {
+app.listen(3000 || process.env.PORT, () => {
     console.log('Listening on port 3000');
 });

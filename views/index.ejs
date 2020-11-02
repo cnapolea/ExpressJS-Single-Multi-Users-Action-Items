@@ -1,6 +1,6 @@
 <%- include("header") %>
 <h1 class="h3 mb-3 font-weight-normal date">
-    <%=typeOfToDo%>
+    <%=nameOfList%>
 </h1>
 
 <div class="forms-area form-signin">
@@ -25,10 +25,9 @@
     
             <input type="text" name="taskInput" id="taskInput" placeholder="New Item" class="form-control" required
                 autofocus autocomplete="off">
-            <button class="btn btn-lg btn-primary btn-block" type="submit" name="list" value=<%=typeOfToDo%>>+</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" name="list" value=<%=nameOfList%>>+</button>
     
         </div>
-    
     
         <p class="mt-5 mb-3 text-muted">&copy; To-do List By Cristiano Napoleao</p>
         
