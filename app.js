@@ -65,7 +65,7 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
 
-    let listName = _.lowerCase(req.body.list);
+    let listName = _.replace(_.lowerCase(req.body.list), " ", "-");
     let task = new Item({
             description: req.body.taskInput,
         });
@@ -93,6 +93,8 @@ app.post("/delete/:listName", (req, res) => {
     let checkedItemId = req.body.checkbox;
     let listName = req.params.listName;
 
+    console.log(listName);
+
     if(listName === "Home") {
 
         Item.findByIdAndRemove(checkedItemId, (err) => {
@@ -104,7 +106,7 @@ app.post("/delete/:listName", (req, res) => {
             }
         });
     } else {
-        Lists.findOne({name: _.lowerCase(listName)}, (err, list) => {
+        Lists.findOne({name: _.replace(_.lowerCase(listName)," ", "-")}, (err, list) => {
             if (err) {
                 console.log(err);
             } else {
@@ -121,7 +123,7 @@ app.post("/delete/:listName", (req, res) => {
 
 app.get("/:todoListName", (req, res) => {
 
-    let listName = _.lowerCase(req.params.todoListName);
+    let listName = _.replace(_.lowerCase(req.params.todoListName), " ", "-");
     
     Lists.findOne({name:listName}, (err, list) => {
         if (!err) {
