@@ -89,16 +89,33 @@ app.post("/", (req, res) => {
 
 });
 
-app.post("/delete", (req, res) => {
+app.post("/delete/:listName", (req, res) => {
     let checkedItemId = req.body.checkbox;
-    Item.findByIdAndRemove(checkedItemId, (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Successfully deleted task");
-            res.redirect("/");
-        }
-    });
+    let listName = req.params.listName;
+
+    if(listName === "Home") {
+
+        Item.findByIdAndRemove(checkedItemId, (err) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Successfully deleted task in root route");
+                res.redirect("/");
+            }
+        });
+    } else {
+        Lists.findOne({name: _.lowerCase(listName)}, (err, list) => {
+            if (err) {
+                console.log(err);
+            } else {
+                
+                list.lists.pull({_id: checkedItemId});
+                list.save();
+                res.redirect(`/${listName}`);
+            }
+        });
+    }
+
 });
 
 
