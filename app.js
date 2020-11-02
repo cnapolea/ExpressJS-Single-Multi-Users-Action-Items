@@ -65,14 +65,26 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
 
-    let listType = req.body.list,
-        task = new Item({
+    let listName = _.lowerCase(req.body.list);
+    let task = new Item({
             description: req.body.taskInput,
         });
+    
+    if (listName === "home") {
+        task.save();
+        res.redirect("/");
 
-    task.save();
-
-    res.redirect("/");
+    } else {
+        Lists.findOne({name: listName}, (err, list) => {
+            if (err) {
+                console.log(err);
+            } else {
+                list.lists.push(task);
+                list.save();
+                res.redirect(`/${listName}`);
+            }
+        }); 
+    }
 
 
 });
@@ -94,24 +106,26 @@ app.get("/:todoListName", (req, res) => {
 
     let listName = _.lowerCase(req.params.todoListName);
     
-    Lists.find({name:listName}, (err, list) => {
-        if (err) {
-            console.log(err);
-        } else {
-            if (list.length > 0) {
-                res.render("index", {
-                    nameOfList: _.startCase(list[0].name),
-                    tasks: list[0].lists,
-                });
-            } else {
+    Lists.findOne({name:listName}, (err, list) => {
+        if (!err) {
+            if (!list) {
+               
                 let newList = new Lists({
                     name: listName,
                     lists: [],
                 });
+
                 newList.save();
                 res.redirect(`/${listName}`);
+                
+            } else {
+                res.render("index", {
+                    nameOfList: _.startCase(list.name),
+                    tasks: list.lists,
+                });
             }
-        }
+        } 
+        
     });
 
 });
