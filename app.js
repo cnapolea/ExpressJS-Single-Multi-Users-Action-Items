@@ -150,6 +150,12 @@ app.get("/:todoListName", (req, res) => {
 });
 
 
-app.listen(3000 || process.env.PORT, () => {
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+app.listen(port);
+
+app.listen(port, () => {
     console.log('Listening on port 3000');
 });
