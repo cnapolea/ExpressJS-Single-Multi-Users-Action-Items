@@ -19,7 +19,7 @@ app.use(express.static('public'));
 app.set('view engine', 'ejs');
 
 // connection to db
-const dbUrl = 'mongodb://localhost:27017/todolistDB';
+const dbUrl = 'mongodb+srv://admin-cristiano:eQ13Pmh!ec@cluster0.rpn4t.mongodb.net/todolistDB?retryWrites=true&w=majority';
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
