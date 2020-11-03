@@ -4,6 +4,7 @@
   "description": "First version of a simple To-Do list",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Cristiano Napoleao",
