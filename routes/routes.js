@@ -12,7 +12,24 @@ router.route('/')
 router.route('/register')
     .get((req, res) => {
         res.render('register');
-    })    
+    })
+    .post((req, res) => {
+        res.redirect('/');
+    })
+    
+router.route('/login')
+    .get((req, res) => {
+        res.render('login');
+    })
+    .post((res, req) => {
+        res.redirect('/profile/:username');
+    })
+
+router.route('/profile/:username')
+    .get((req, res) => {
+        let username = req.params.username;
+        res.render('profile');
+    })
 
 module.exports = router;
 
