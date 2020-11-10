@@ -1,5 +1,5 @@
 require('dotenv').config({
-    path: __dirname + '/config'
+    path: __dirname + '/config/.env'
 });
 
 const env = {
@@ -9,12 +9,15 @@ const env = {
     session_secret: process.env.SESSION_SECRET,
 };
 
+const routes = require(__dirname + '/routes/routes.js');
+
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
 const bodyParser = require('body-parser');
-const date = require(__dirname + "/date.js");
 
 const app = express();
 
@@ -28,7 +31,7 @@ app.use(session({
     secret: env.session_secret,
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({ db: mongoose.connection }),
+    store: new MongoStore({ url: 'mongodb://localhost/todolistDB' }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24,
     }
@@ -46,123 +49,15 @@ mongoose.connect(dbUri, {
 
 mongoose.set('useCreateIndex', true);
 
-app.get("/", (req, res) => {
-
-    // get tasks array
-    Item.find({}, (err, tasks) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render("index", {
-                nameOfList: "Home",
-                tasks: tasks
-            });
-        }
-    });
-});
-
-
-app.post("/", (req, res) => {
-
-    let listName = _.replace(_.lowerCase(req.body.list), " ", "-");
-    let task = new Item({
-        description: req.body.taskInput,
-    });
-
-    if (listName === "home") {
-        task.save();
-        res.redirect("/");
-
-    } else {
-        Lists.findOne({
-            name: listName
-        }, (err, list) => {
-            if (err) {
-                console.log(err);
-            } else {
-                list.lists.push(task);
-                list.save();
-                res.redirect(`/${listName}`);
-            }
-        });
-    }
-
-
-});
-
-app.post("/delete/:listName", (req, res) => {
-    let checkedItemId = req.body.checkbox;
-    let listName = req.params.listName;
-
-    console.log(listName);
-
-    if (listName === "Home") {
-
-        Item.findByIdAndRemove(checkedItemId, (err) => {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log("Successfully deleted task in root route");
-                res.redirect("/");
-            }
-        });
-    } else {
-        Lists.findOne({
-            name: _.replace(_.lowerCase(listName), " ", "-")
-        }, (err, list) => {
-            if (err) {
-                console.log(err);
-            } else {
-
-                list.lists.pull({
-                    _id: checkedItemId
-                });
-                list.save();
-                res.redirect(`/${listName}`);
-            }
-        });
-    }
-
-});
-
-
-app.get("/:todoListName", (req, res) => {
-
-    let listName = _.replace(_.lowerCase(req.params.todoListName), " ", "-");
-
-    Lists.findOne({
-        name: listName
-    }, (err, list) => {
-        if (!err) {
-            if (!list) {
-
-                let newList = new Lists({
-                    name: listName,
-                    lists: [],
-                });
-
-                newList.save();
-                res.redirect(`/${listName}`);
-
-            } else {
-                res.render("index", {
-                    nameOfList: _.startCase(list.name),
-                    tasks: list.lists,
-                });
-            }
-        }
-
-    });
-
-});
-
+app.use('/', routes); 
 
 let port = process.env.PORT;
+
 if (port == null || port == "") {
     port = env.local_host_port;
 }
 
-app.listen(port, () => {
+app.listen(env.local_host_port, () => {
     console.log('Listening on port 3000');
 });
 

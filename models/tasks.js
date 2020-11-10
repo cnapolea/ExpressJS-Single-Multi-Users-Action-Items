@@ -8,5 +8,5 @@ const taskSchema = mongoose.Schema({
 
 module.exports = {
     schema: taskSchema,
-    model: new mongoose.model('Task', this.schema)
+    model: new mongoose.model('Task', taskSchema)
 }

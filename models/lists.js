@@ -10,5 +10,5 @@ const listSchema = mongoose.Schema({
 
 module.exports = {
     schema: listSchema,
-    model: new mongoose.model('List', this.schema)
+    model: new mongoose.model('List', listSchema)
 }
