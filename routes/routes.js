@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const router = express.Router();
 
 // User model to be used in the registration and login routes
@@ -11,9 +12,16 @@ router.route('/')
 
 router.route('/register')
     .get((req, res) => {
+        
         res.render('register');
     })
     .post((req, res) => {
+        const passwordRequirement = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,20}$/;
+
+        const password = req.body.password;
+        const matchCheck = password.match(passwordRequirement);
+        
+
         res.redirect('/');
     })
     
