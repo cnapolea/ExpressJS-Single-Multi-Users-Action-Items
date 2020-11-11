@@ -10,35 +10,47 @@ const env = {
 };
 
 const routes = require(__dirname + '/routes/routes.js');
+const User = require(__dirname + '/models/users');
 
 const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const passportLocalMongoose = require('passport-local-mongoose');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
 
 const app = express();
 
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app
+    .use(express.static('public'))
+    .use(bodyParser.urlencoded({
+        extended: true
+    }))
+    .use(session({
+        secret: env.session_secret,
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({
+            url: 'mongodb://localhost/todolistDB'
+        }),
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24,
+        }
+    }))
+    .use(flash())
+    .use(passport.initialize())
+    .use(passport.session());
+
 app.set('view engine', 'ejs');
 
-app.use(session({
-    secret: env.session_secret,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ url: 'mongodb://localhost/todolistDB' }),
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24,
-    }
-}))
+passport
+    .use(new LocalStrategy(User.authenticate()))
 
-app.use(passport.initialize());
-app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // connection to local db
 const dbUri = 'mongodb://localhost/todolistDB'
@@ -49,7 +61,9 @@ mongoose.connect(dbUri, {
 
 mongoose.set('useCreateIndex', true);
 
-app.use('/', routes); 
+
+
+app.use('/', routes);
 
 let port = process.env.PORT;
 

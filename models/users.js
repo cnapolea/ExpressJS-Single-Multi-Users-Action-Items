@@ -10,8 +10,8 @@ const userSchema = new mongoose.Schema({
     lists: [list.schema],
 });
 
-userSchema.plugin(passportLocalMongoose);
+userSchema.plugin(passportLocalMongoose, {
+    attemptsField: 3,
+});
 
 module.exports = new mongoose.model('User', userSchema);
-
-
