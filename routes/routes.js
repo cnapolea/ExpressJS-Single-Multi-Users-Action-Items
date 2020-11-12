@@ -6,7 +6,9 @@ const router = express.Router();
 
 
 // function that checks if password matches requirements
-const passwordCheck = require('../project_modules/password-check');
+// const passwordCheck = require('../project_modules/password-check');
+
+const registerUser = require('../services/register');
 
 // User model to be used in the registration and login routes
 const User = require('../models/users');
@@ -22,34 +24,8 @@ router.route('/register')
             message: req.flash('invalidPassword')
         });
     })
-    .post(async (req, res) => {
-
-        let unformattedUsername = await _.lowerCase(req.body.username);
-        let username = _.replace(unformattedUsername, ' ', '-');
-        let password = await req.body.password;
-
-        let passwordIsValid = passwordCheck(password);
-
-        if (passwordIsValid.status === 'failed') {
-            req.flash('invalidPassword', passwordIsValid.invalidPassord.message)
-            res.redirect('/register');
-
-        } else {
-
-            try {
-                User.register({
-                    username: username
-                }, password, function (err) {
-                    if (err) {
-                        console.log('error while user register!', err);
-                    }
-                    console.log(`user ${username} registered!`)
-                    res.redirect(`/profile/${username}`);
-                });
-            } catch (error) {
-                console.log(error);
-            }
-        }
+    .post((req, res) => {
+        registerUser(req, res, req.body.username, req.body.password, User);
     })
 
 router.route('/login')
