@@ -25,7 +25,7 @@ router.route('/register')
         });
     })
     .post((req, res) => {
-        registerUser(req, res, req.body.username, req.body.password, User);
+        registerUser(req, res, req.body.username, req.body.email, req.body.password, User);
     })
 
 router.route('/login')

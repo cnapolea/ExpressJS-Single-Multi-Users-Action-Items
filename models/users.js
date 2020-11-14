@@ -4,9 +4,18 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const list = require('./lists.js')
 
 const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    email: String,
+    username: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: [true, 'Email alredy exists.'],
+    },
+    password: {
+        type: String,
+    },
     lists: [list.schema],
 });
 
