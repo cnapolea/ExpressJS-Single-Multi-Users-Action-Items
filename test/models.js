@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 
 const User = require('../models/users');
 
+
 describe('The user model requirements', () => {
     
     let username = 'test5',
@@ -52,4 +53,6 @@ describe('The user model requirements', () => {
         done();
 
     });
+
+
 });
