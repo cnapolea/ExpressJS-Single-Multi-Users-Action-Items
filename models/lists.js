@@ -3,12 +3,15 @@ const tasks = require("./tasks.js");
 
 const listSchema = mongoose.Schema({
     name: {
-        type:String,
-        require:true
+        type: String,
+        require: true
     },
     description: String,
     date_created: Date,
-    tasks: [tasks.schema],
+    tasks: {
+        type: [tasks.schema],
+        unique: true
+    },
 });
 
 module.exports = {

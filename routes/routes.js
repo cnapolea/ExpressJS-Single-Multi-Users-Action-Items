@@ -9,6 +9,8 @@ const router = express.Router();
 // const passwordCheck = require('../project_modules/password-check');
 
 const registerUser = require('../services/register');
+const createList = require('../services/create_list');
+const addList = require('../services/addListToUser');
 
 // User model to be used in the registration and login routes
 const User = require('../models/users');
@@ -21,7 +23,7 @@ router.route('/')
 router.route('/register')
     .get((req, res) => {
         res.render('register', {
-            message: req.flash('invalidPassword')
+            message: req.flash('Invalid Password')
         });
     })
     .post((req, res) => {
@@ -43,8 +45,9 @@ router.route('/login')
 router.route('/profile/:username')
     .get((req, res) => {
         if (req.user) {
-            let userID = req.user._id;
-            res.render('profile', {user: username});
+
+            let activeUser = req.user;
+            res.render('profile', {user: activeUser.username});
         } else {
             res.redirect('/login');
         }
@@ -53,10 +56,20 @@ router.route('/profile/:username')
 
 router.route("/profile/:username/new-action-list")
     .get((req, res) => {
-        res.render('create_action_list', {user:req.user.username});
+        res.render('create_action_list', {user: req.user});
     })
-    .post((req, res) => {
+    .post(async (req, res) => {
+
+        const listName = await req.body.action_list_name;
+        const listDescription = await req.body.list_description;
+        const activeUser = await req.user;
+
         
+        const newList = createList(listName, listDescription);
+        newList.save();
+
+        addList(User, activeUser, newList, req, res);
+          
     })
 
 router.get('/logout', (req, res) => {

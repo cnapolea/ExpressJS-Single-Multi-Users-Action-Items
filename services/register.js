@@ -16,6 +16,7 @@ module.exports = async (req, res, username, email, password, userModel) => {
         userModel.register({
             username: username,
             email: email,
+            lists:[],
         }, password, async (err) => {
             try {
                 if (err) {

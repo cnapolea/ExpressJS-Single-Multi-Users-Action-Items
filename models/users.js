@@ -17,7 +17,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
     },
-    lists: [list.schema],
+    lists: {
+        type: [list.schema],
+        unique: true,
+    },
 });
 
 userSchema.plugin(passportLocalMongoose, {

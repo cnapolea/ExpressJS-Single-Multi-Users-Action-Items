@@ -1,7 +1,7 @@
 <%- include('header') %>
 
     <form action="/profile/<%= user.username %>/new-action-list/" method="post">
-    
+        <h1><%= user.username %></h1>
         <input type="text" name="action_list_name" id="">
         <textarea name="list_description" id="" cols="30" rows="10"></textarea>
         <button type="submit">Create List</button>
