@@ -42,9 +42,21 @@ router.route('/login')
 
 router.route('/profile/:username')
     .get((req, res) => {
-        let username = req.user;
-        console.log(username);
-        res.render('profile', {user: username});
+        if (req.user) {
+            let userID = req.user._id;
+            res.render('profile', {user: username});
+        } else {
+            res.redirect('/login');
+        }
+
+    });
+
+router.route("/profile/:username/new-action-list")
+    .get((req, res) => {
+        res.render('create_action_list', {user:req.user.username});
+    })
+    .post((req, res) => {
+        
     })
 
 router.get('/logout', (req, res) => {

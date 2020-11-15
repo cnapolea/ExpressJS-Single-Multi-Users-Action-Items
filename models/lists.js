@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const tasks = require("./tasks.js");
 
 const listSchema = mongoose.Schema({
-    name: String,
+    name: {
+        type:String,
+        require:true
+    },
     description: String,
     date_created: Date,
     tasks: [tasks.schema],

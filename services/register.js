@@ -3,9 +3,9 @@ const _ = require('lodash');
 // function that checks if password matches requirements
 const passwordCheck = require('../project_modules/password-check');
 
-module.exports = async (req, res, unformattedUsername, email, password, userModel) => {
+module.exports = async (req, res, username, email, password, userModel) => {
 
-    let username = await _.replace(_.lowerCase(unformattedUsername), ' ', '-');
+    let urlUsername = await _.replace(_.lowerCase(unformattedUsername), ' ', '-');
     let passwordIsValid = await passwordCheck(password);
 
     if (passwordIsValid.status === 'failed') {
@@ -27,7 +27,7 @@ module.exports = async (req, res, unformattedUsername, email, password, userMode
 
                 } else {
                     console.log(`user ${username} registered!`)
-                    res.redirect(`/profile/${username}`);
+                    res.redirect(`/profile/${urlUsername}`);
                 }
             } catch (error) {
                 req.flash('registrationError', error.message);
