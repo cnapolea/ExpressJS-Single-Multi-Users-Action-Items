@@ -30,16 +30,21 @@ router.route('/register')
 
 router.route('/login')
     .get((req, res) => {
-        res.render('login');
+        res.render('login', {user:req.user, message: req.flash('error')});
     })
-    .post((res, req) => {
-        res.redirect('/profile/:username');
-    })
+    .post(passport.authenticate('local', {
+            failureRedirect: '/login',
+            failureFlash: true
+        }), (req, res) => {
+            res.redirect(`/profile/${req.body.username}`);
+        }
+    );
 
 router.route('/profile/:username')
     .get((req, res) => {
-        let username = req.params.username;
-        res.render('profile');
+        let username = req.user;
+        console.log(username);
+        res.render('profile', {user: username});
     })
 
 router.get('/logout', (req, res) => {
