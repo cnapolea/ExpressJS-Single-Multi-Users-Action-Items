@@ -8,10 +8,7 @@ const listSchema = mongoose.Schema({
     },
     description: String,
     date_created: Date,
-    tasks: {
-        type: [tasks.schema],
-        unique: true
-    },
+    tasks: [tasks.schema],
 });
 
 module.exports = {

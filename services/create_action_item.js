@@ -11,6 +11,8 @@ const status = ['Not Started', 'In progress', 'Completed'];
 
 module.exports = (description, priority= priority.normal, status = status[0]) => {
     
+    /* Creates a new task document in the db. */
+
     let actionItem = new actionItem({
         description: description,
         priority: priority,

@@ -10,10 +10,12 @@ const router = express.Router();
 
 const registerUser = require('../services/register');
 const createList = require('../services/create_list');
-const addList = require('../services/addListToUser');
+const addList = require('../services/add_list_to_user');
 
 // User model to be used in the registration and login routes
 const User = require('../models/users');
+
+const profilePath = '/profile/:username';
 
 router.route('/')
     .get((req, res) => {
@@ -32,31 +34,42 @@ router.route('/register')
 
 router.route('/login')
     .get((req, res) => {
-        res.render('login', {user:req.user, message: req.flash('error')});
+        res.render('login', {
+            user: req.user,
+            message: req.flash('error')
+        });
     })
     .post(passport.authenticate('local', {
-            failureRedirect: '/login',
-            failureFlash: true
-        }), (req, res) => {
-            res.redirect(`/profile/${req.body.username}`);
-        }
-    );
+        failureRedirect: '/login',
+        failureFlash: true
+    }), (req, res) => {
+        res.redirect(`/profile/${req.body.username}`);
+    });
 
-router.route('/profile/:username')
+router.route(profilePath)
     .get((req, res) => {
         if (req.user) {
 
             let activeUser = req.user;
-            res.render('profile', {user: activeUser.username});
+            res.render('profile', {
+                user: activeUser.username
+            });
         } else {
             res.redirect('/login');
         }
 
     });
 
-router.route("/profile/:username/new-action-list")
+router.route(profilePath + "/new-action-list")
     .get((req, res) => {
-        res.render('create_action_list', {user: req.user});
+        if (req.user) {
+
+            res.render('create_action_list', {
+                user: req.user
+            });
+        } else {
+            res.redirect('/login');
+        }
     })
     .post(async (req, res) => {
 
@@ -64,12 +77,41 @@ router.route("/profile/:username/new-action-list")
         const listDescription = await req.body.list_description;
         const activeUser = await req.user;
 
-        
+
         const newList = createList(listName, listDescription);
         newList.save();
-
         addList(User, activeUser, newList, req, res);
-          
+
+    });
+
+router.route(profilePath + '/:listName')
+    .get((req, res) => {
+
+        if (req.user) {
+            res.render('action_list', {
+                list: ""
+            });
+        } else {
+            res.redirect('/login');
+        }
+    });
+
+router.route(profilePath + '/:listName/:new-item')
+    .get((req, res) => {
+        if (req.user) {
+            const listName = req.params.listName;
+            const user = req.user;
+
+            res.render('create_action_item', {
+                user: user,
+                listName: listName
+            });
+        } else {
+            res.redirect('/login');
+        }
+    })
+    .post((req, res) => {
+
     })
 
 router.get('/logout', (req, res) => {
@@ -79,36 +121,6 @@ router.get('/logout', (req, res) => {
 
 module.exports = router;
 
-// module.exports = (app) => {
-
-
-// app.post("/", (req, res) => {
-
-//     let listName = _.replace(_.lowerCase(req.body.list), " ", "-");
-//     let task = new Item({
-//         description: req.body.taskInput,
-//     });
-
-//     if (listName === "home") {
-//         task.save();
-//         res.redirect("/");
-
-//     } else {
-//         Lists.findOne({
-//             name: listName
-//         }, (err, list) => {
-//             if (err) {
-//                 console.log(err);
-//             } else {
-//                 list.lists.push(task);
-//                 list.save();
-//                 res.redirect(`/${listName}`);
-//             }
-//         });
-//     }
-
-
-// });
 
 // app.post("/delete/:listName", (req, res) => {
 //     let checkedItemId = req.body.checkbox;
