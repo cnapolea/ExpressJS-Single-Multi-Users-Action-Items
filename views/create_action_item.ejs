@@ -1,20 +1,20 @@
 <%- include('header') %>
 
     <form action="/profile/<%= user.username %>/<%= listName %>/new-item/" method="post">
-        
-        <input type="text" name="item-description" id=""><br>
+
+        <input type="text" name="itemDescription" id=""><br>
         
         <div class="priority">
 
             <label for="">Priority:</label>
             
-            <input type="radio" name="priority" id="high" >
+            <input type="radio" name="priority" id="high" value="high">
             <label for="high">!!!</label>
             
-            <input type="radio" name="priority" id="normal">
+            <input type="radio" name="priority" id="normal" value="normal">
             <label for="normal">!!</label>
     
-            <input type="radio" name="priority" id="low">
+            <input type="radio" name="priority" id="low" value="low">
             <label for="low">!</label>
 
         </div>

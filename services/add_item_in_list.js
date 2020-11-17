@@ -12,31 +12,31 @@ module.exports = (userModel, user, listName, actionItem, req, res) => {
             if (err) {
                 throw new Error(err.message);
             } else {
-                forEach(user.lists, (list) => {
-                    try {
-                        if (list.name === listName) {
-                            list.tasks.push(actionItem);
+                let found = false;
+                
+                user.lists.forEach(list => {
+                        
+                    if (_.lowerCase(list.name) === _.lowerCase(listName)) {
 
-                            list.save();
-                            user.save();
-
-                            res.redirect(`/profile/${urlUsername}/${listName}`);
-
-                        } else {
-                            throw new Error('Problem adding new action item');
-                        }
-                    } catch (error) {
-                        res.render('create_action_item', {
-                            message: req.flash(error.message)
+                        list.tasks.push(actionItem);
+                        // list.save();
+                        user.save(err => {
+                            if (err){
+                                throw new Error(err.message);
+                            } else {
+                                res.redirect(`/profile/${urlUsername}/${listName}`);
+                            }
                         });
-                    }
+                    }                     
                 });
-                res.redirect(`/profile/${urlUsername}/`);
             }
         } catch (error) {
             res.render('create_action_item', {
-                message: req.flash(error.message)
+                message: req.flash(error.message),
+                user: user,
+                listName: listName,
             });
+            console.log('here 3')
         }
 
     });

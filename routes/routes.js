@@ -11,6 +11,8 @@ const router = express.Router();
 const registerUser = require('../services/register');
 const createList = require('../services/create_list');
 const addList = require('../services/add_list_to_user');
+const createItem = require('../services/create_action_item');
+const addItem = require('../services/add_item_in_list');
 
 // User model to be used in the registration and login routes
 const User = require('../models/users');
@@ -96,21 +98,32 @@ router.route(profilePath + '/:listName')
         }
     });
 
-router.route(profilePath + '/:listName/:new-item')
-    .get((req, res) => {
+router.route(profilePath + '/:listName/new-item')
+    .get(async (req, res) => {
         if (req.user) {
-            const listName = req.params.listName;
-            const user = req.user;
+            const listName = await req.params.listName;
+            const user = await req.user;
 
             res.render('create_action_item', {
                 user: user,
                 listName: listName
             });
+            
         } else {
             res.redirect('/login');
         }
     })
     .post((req, res) => {
+        const user = req.user;
+        const listName = req.params.listName;
+        const itemDescription = req.body.itemDescription;
+        const priority = req.body.priority;
+        const status = req.body.status;
+
+        const newItem = createItem(itemDescription, priority, status);
+        newItem.save();
+
+        addItem(User, user, listName, newItem, req, res);
 
     })
 

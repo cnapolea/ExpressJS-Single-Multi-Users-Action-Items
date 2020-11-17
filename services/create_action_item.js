@@ -1,4 +1,4 @@
-const ActionItem = require('../models/tasks'.model);
+const ActionItem = require('../models/tasks').model;
 const List = require('../models/lists').model;
 
 const priority = {
@@ -7,13 +7,13 @@ const priority = {
     low:'!'
 };
 
-const status = ['Not Started', 'In progress', 'Completed'];
+const statusList = ['Not Started', 'In Progress', 'Completed'];
 
-module.exports = (description, priority= priority.normal, status = status[0]) => {
+module.exports = (description, priority = priority.normal, status = statusList[0]) => {
     
     /* Creates a new task document in the db. */
 
-    let actionItem = new actionItem({
+    let actionItem = new ActionItem({
         description: description,
         priority: priority,
         status: status,
