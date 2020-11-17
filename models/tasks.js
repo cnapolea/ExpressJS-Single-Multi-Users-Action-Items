@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
 
 const taskSchema = mongoose.Schema({
-    description: String,
-    priority: String,
-    status: String
+    description: {
+        type: String,
+        required: true
+    },
+    priority: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true
+    }
 });
 
 module.exports = {

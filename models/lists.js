@@ -4,7 +4,7 @@ const tasks = require("./tasks.js");
 const listSchema = mongoose.Schema({
     name: {
         type: String,
-        require: true
+        required: true
     },
     description: String,
     date_created: Date,

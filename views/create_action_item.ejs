@@ -1,0 +1,44 @@
+<%- include('header') %>
+
+    <form action="/profile/<%= user.username %>/new-action-item/" method="post">
+        
+        <input type="text" name="item-description" id=""><br>
+        
+        <div class="priority">
+
+            <label for="">Priority:</label>
+            
+            <input type="radio" name="high" id="high">
+            <label for="high">!!!</label>
+            
+            <input type="radio" name="normal" id="normal">
+            <label for="normal">!!</label>
+    
+            <input type="radio" name="low" id="low">
+            <label for="low">!</label>
+
+        </div>
+        
+        <div class="status">
+
+            <br>
+            <label for="">Status:</label>
+            
+            <input type="checkbox" name="notStarted" id="notStarted" value="Not Started">
+            <label for="notStarted">Not Started</label>
+            
+            <input type="checkbox" name="inProgress" id="inProgress" value="In Progress">
+            <label for="inProgress">In Progress</label>
+            
+            <input type="checkbox" name="completed" id="completed" value="Completed">
+            <label for="completed">Completed</label>
+            
+
+        </div>
+        
+
+        <button type="submit">Create List</button>
+        
+    </form>
+
+<%- include('footer') %>
