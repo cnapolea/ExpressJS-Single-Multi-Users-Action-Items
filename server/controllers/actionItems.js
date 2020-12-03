@@ -44,4 +44,25 @@ export const createActionItem = async (req, res) => {
     } catch (err) {
         res.status(400).json({message: err.message});
     }
-}
+};
+
+export const deleteActionItems = async (req, res) => {
+    try {
+        const actionListId = await req.params.listId;
+        
+        await Lists.findById(actionListId, (err, list) => {
+            if (err) {throw err}
+            else {
+                list.items.remove();
+                list.save(err => {
+                    if (err) {throw err}
+                    else {
+                        res.status(200).json({message: 'Deleted all action items'});
+                    }
+                });
+            }
+        });
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+};

@@ -34,8 +34,8 @@ export const createActionList = async (req, res) => {
 export const deleteActionLists = async (req, res) => {
 
     try {
-        const removedLists = Lists.remove();
-        res.status(200).json({message: "Deleted all action lists."});
+        Lists.remove();
+        res.status(200).json({message: 'Deleted all action lists.'});
         
     } catch (err) {
         res.status(400).json({message: err.message});
