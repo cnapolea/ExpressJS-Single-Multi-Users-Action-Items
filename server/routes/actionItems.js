@@ -1,7 +1,7 @@
 import express from 'express';
-import lodash from 'lodash';
 
-import {getActionLists, createActionLists, deleteActionList} from '../controllers/actionLists.js';
+
+import {getActionLists, createActionList, deleteActionLists} from '../controllers/actionLists.js';
 
 const router = express.Router();
 

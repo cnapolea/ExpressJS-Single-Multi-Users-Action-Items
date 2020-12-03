@@ -35,16 +35,36 @@ export const deleteActionLists = async (req, res) => {
 
     try {
         const removedLists = Lists.remove();
+        res.status(200).json({message: "Deleted all action lists."});
         
-        removedLists.save((err) => {
-            if (err) {
-                throw err;
-            } else {
-                res.status(200).json({message: "Deleted all action lists."})
-            }
-        });
     } catch (err) {
         res.status(400).json({message: err.message});
     }
 };
 
+export const updateActionList = async (req, res) => {
+    try {
+        const actionListId = await req.params.id;
+
+        // The client will be sending an object with the fields to be updated in the action lists. the names of the input should match the model's field names
+        const updateInfo = await req.body.updateInfo;
+
+        Lists.updateOne({_id : actionListId}, updateInfo, (err) => {
+            if (err) {throw err}
+            else {
+                res.status(202).json({message: 'Your action list was updated successfully'});
+            };
+        });
+
+    } catch (err) {
+        res.status(409).json({message: err.message});
+    }
+}
+
+export const deleteActionList = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
