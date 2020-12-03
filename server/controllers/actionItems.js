@@ -1,7 +1,6 @@
 import Lists from '../models/lists.js';
 import Tasks from '../models/items.js';
 
-
 export const getActionItems = async (req, res) => {
 
     try {
@@ -84,3 +83,25 @@ export const updateActionItem = async (req, res) => {
         res.status(409).json({message: err.message});
     }
 };
+
+export const deleteActionItem = async (req, res) => {
+    const actionListId = await req.params.listId;
+    const actionItemId = await req.params.itemId;
+
+    try {
+        Lists.findById(actionListId, (err, list) => {
+            if (err) {throw err}
+            else {
+                list.items.id(actionItemId).remove()
+                list.save(err => {
+                    if (err) {throw err}
+                    else {
+                        res.status(202).json({message: 'Action item deleted successfuly.'});
+                    }
+                });
+            }
+        });        
+    } catch (err) {
+        res.status(409).json({message: err.message});
+    }
+}
