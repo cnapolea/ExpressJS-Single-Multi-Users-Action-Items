@@ -1,13 +1,17 @@
 import express from 'express';
 import lodash from 'lodash';
 
-import {getActionLists, createActionList} from '../controllers/actionLists.js';
+import {getActionLists, createActionLists, deleteActionList} from '../controllers/actionLists.js';
 
 const router = express.Router();
 
 router.route('/lists')
     .get(getActionLists)
-    .post()
+    .post(createActionList)
+    .delete(deleteActionLists);
+
+
+router.route('/lists/:listId')
 
 export default router;
 

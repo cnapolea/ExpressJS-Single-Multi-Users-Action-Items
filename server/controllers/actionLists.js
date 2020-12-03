@@ -31,7 +31,20 @@ export const createActionList = async (req, res) => {
     }
 };
 
-export const deleteActionList = async (req, res) => {
-    const listId = await req.body.id;
-    
+export const deleteActionLists = async (req, res) => {
+
+    try {
+        const removedLists = Lists.remove();
+        
+        removedLists.save((err) => {
+            if (err) {
+                throw err;
+            } else {
+                res.status(200).json({message: "Deleted all action lists."})
+            }
+        });
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
 };
+
