@@ -4,8 +4,6 @@ export const getActionLists = async (req, res) => {
     
     try {
         const actionLists = await Lists.find();
-        
-        console.log(actionLists);
 
         res.status(200).json(actionLists);
         
