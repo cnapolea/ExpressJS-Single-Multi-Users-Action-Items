@@ -3,7 +3,7 @@ import express from 'express';
 
 import {getActionLists, createActionList, deleteActionLists, updateActionList, deleteActionList} from '../controllers/actionLists.js';
 
-import {getActionItems} from '../controllers/actionItems.js';
+import {getActionItems, createActionItem} from '../controllers/actionItems.js';
 
 const router = express.Router();
 
@@ -19,7 +19,9 @@ router.route('/lists/:listId')
 
 router.route('/lists/:listId/tasks')
     .get(getActionItems)
-    .post()
+    .post(createActionItem)
+    .delete()
+
 
 export default router;
 

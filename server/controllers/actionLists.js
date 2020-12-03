@@ -14,9 +14,11 @@ export const getActionLists = async (req, res) => {
 };
 
 export const createActionList = async (req, res) => {
-    const newActionList = await new List(req.body);
+    const listFields = await req.body;
     
     try {
+        const newActionList = new List(listFields);
+        
         newActionList.save((err) => {
             if (err) {
                 throw err

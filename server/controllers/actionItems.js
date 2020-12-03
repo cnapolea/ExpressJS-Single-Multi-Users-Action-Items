@@ -20,3 +20,28 @@ export const getActionItems = async (req, res) => {
     
 };
 
+export const createActionItem = async (req, res) => {
+    try {
+        const actionListId = await req.params.listId;
+        const itemFields = await req.body;
+
+        await Lists.findById(actionListId, (err, list) => {
+            if (err) {throw err}
+            else {
+                const newActionItem = new Items(itemFields);
+
+                list.items.push(newActionItem);
+
+                list.save(err => {
+                    if (err) {throw err}
+                    else {
+                        res.status(201).json(newActionItem);
+                    }
+                });
+            }
+        });
+
+    } catch (err) {
+        res.status(400).json({message: err.message});
+    }
+}
