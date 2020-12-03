@@ -44,7 +44,7 @@ export const deleteActionLists = async (req, res) => {
 
 export const updateActionList = async (req, res) => {
     try {
-        const actionListId = await req.params.id;
+        const actionListId = await req.params.listId;
 
         // The client will be sending an object with the fields to be updated in the action lists. the names of the input should match the model's field names
         const updateInfo = await req.body.updateInfo;
@@ -63,8 +63,15 @@ export const updateActionList = async (req, res) => {
 
 export const deleteActionList = async (req, res) => {
     try {
-        
+        const actionListId = req.params.listId;
+
+        Lists.remove({_id: actionListId}, (err) => {
+            if(err) {throw err}
+            else {
+                res.status(202).json({message: 'List deleted successfully.'});
+            }
+        });
     } catch (error) {
-        
+        res.status(409).json({message: err.message});
     }
 }

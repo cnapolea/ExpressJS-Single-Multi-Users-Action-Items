@@ -1,7 +1,7 @@
 import express from 'express';
 
 
-import {getActionLists, createActionList, deleteActionLists} from '../controllers/actionLists.js';
+import {getActionLists, createActionList, deleteActionLists, updateActionList, deleteActionList} from '../controllers/actionLists.js';
 
 const router = express.Router();
 
@@ -12,6 +12,8 @@ router.route('/lists')
 
 
 router.route('/lists/:listId')
+    .patch(updateActionList)
+    .delete(deleteActionList);
 
 export default router;
 
