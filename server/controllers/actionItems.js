@@ -66,3 +66,21 @@ export const deleteActionItems = async (req, res) => {
         res.status(400).json({message: err.message});
     }
 };
+
+export const updateActionItem = async (req, res) => {
+    try {
+        const actionListId = await req.params.listId;
+        const actionItemId = await req.params.itemId;
+
+        await Lists.update({_id: actionListId, 'items._id': actionItemId}, { '$set': { "items": await req.bodyl } }, (err) => {
+            if (err) {throw err}
+            else {
+                res.status(202).json({message: 'Your action item was updated successfully'});
+            }
+        }
+        );
+
+    } catch (err) {
+        res.status(409).json({message: err.message});
+    }
+};
