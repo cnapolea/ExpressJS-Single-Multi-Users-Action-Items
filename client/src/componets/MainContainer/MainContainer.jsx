@@ -13,13 +13,14 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {useStyles} from './styles.js';
-import ListContainer from '../ActionList/ListContainer.jsx';
+import ListContainer from './ListContainer/ListContainer.jsx'
 
 
 export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [newListBtnClicked, setnewListBtnClicked] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -28,6 +29,10 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleNewListBtnClick = () => {
+    setnewListBtnClicked(true);
+  }
 
   return (
     <div className={classes.root}>
@@ -52,7 +57,7 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            {"<Action Lists/>"}
+            Nizzer
           </Typography>
         </Toolbar>
 
@@ -83,7 +88,7 @@ export default function MiniDrawer() {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-          <ListItem button key='Add List'>
+          <ListItem button key='Add List' onClick={()=> handleNewListBtnClick()}>
               <ListItemIcon><AddCircleIcon/></ListItemIcon>
               <ListItemText primary='Add List'/>
             </ListItem>
@@ -93,7 +98,7 @@ export default function MiniDrawer() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Grid container spacing={0}>
-          <ListContainer/>
+          <ListContainer newListBtnClicked={newListBtnClicked}/>
           {/* <Grid item xs={12} md={6} >
 
           </Grid> */}
