@@ -20,7 +20,9 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [isHome, setIsHome] = React.useState(false);
   const [newListBtnClicked, setNewListBtnClicked] = React.useState(false);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -36,6 +38,14 @@ export default function MiniDrawer() {
 
   const handleCancelNewListFormBtn = () => {
     setNewListBtnClicked(false);
+  }
+
+  const handleHomeListsClick = (btnName) => {
+    if(btnName === 'Home') {
+      setIsHome(true);
+      setNewListBtnClicked(false);
+    }
+
   }
 
   return (
@@ -87,7 +97,7 @@ export default function MiniDrawer() {
         <Divider />
         <List>
           {['Home', 'My Lists'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} onClick={ ()=> handleHomeListsClick(text)}>
               <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <ListIcon/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>

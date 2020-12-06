@@ -12,7 +12,8 @@ function ListContainer(props){
             <Grid container spacing={6}>
                 {
                 props.newListBtnClicked?
-                <ListFormDisplay cancelBtnHandler={props.cancelBtnHandler}/>:
+                    <ListFormDisplay cancelBtnHandler={props.cancelBtnHandler} 
+                    newListBtnClicked={props.newListBtnClicked}/>:
                 <>
                     <SearchBar/>
                     <ListDisplay/>
