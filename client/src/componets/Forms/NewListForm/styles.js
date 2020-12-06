@@ -4,14 +4,17 @@ const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
         margin: theme.spacing(1),
-        width: '80%',
+        width: '100%',
       },
     },
     listNameInput: {
         width: '50% !important'
     },
-    createBtn:{
-        margin:'19px 3px 0 0 !important'
+    formButtons:{
+        margin: theme.spacing(1),
+    },
+    cancelBtn:{
+      margin: theme.spacing(1)
     }
   }));
 

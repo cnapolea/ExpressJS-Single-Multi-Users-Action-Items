@@ -1,10 +1,10 @@
 import React from 'react';
-import {TextField, Button, Container} from '@material-ui/core';
+import {TextField, Button} from '@material-ui/core';
 
 import useStyles from './styles.js'
 
 
-function NewListForm(){
+function NewListForm(props){
     const classes = useStyles();
     const [value, setValue] = React.useState('');
   
@@ -27,8 +27,11 @@ function NewListForm(){
                     value={value}
                     onChange={handleChange}
                     variant="outlined"
-                />
-                <Button className= {classes.createBtn} variant="contained">Create</Button>
+                /> <br/>
+                <div className={classes.formButtons}>
+                    <Button className={classes.createBtn} variant="contained">Create</Button>
+                    <Button className={classes.cancelBtn} variant="outlined" onClick={props.cancelBtnHandler}>Cancel</Button>
+                </div>
             </div>
 
         </form>

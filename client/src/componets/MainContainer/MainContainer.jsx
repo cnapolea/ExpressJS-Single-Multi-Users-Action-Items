@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListIcon from '@material-ui/icons/ListAlt';
-import SearchIcon from '@material-ui/icons/Search';
+import HomeIcon from '@material-ui/icons/HomeOutlined';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {useStyles} from './styles.js';
@@ -20,7 +20,7 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [newListBtnClicked, setnewListBtnClicked] = React.useState(false);
+  const [newListBtnClicked, setNewListBtnClicked] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -31,7 +31,11 @@ export default function MiniDrawer() {
   };
 
   const handleNewListBtnClick = () => {
-    setnewListBtnClicked(true);
+    setNewListBtnClicked(true);
+  }
+
+  const handleCancelNewListFormBtn = () => {
+    setNewListBtnClicked(false);
   }
 
   return (
@@ -82,9 +86,9 @@ export default function MiniDrawer() {
         </div>
         <Divider />
         <List>
-          {['My Lists', 'Search'].map((text, index) => (
+          {['Home', 'My Lists'].map((text, index) => (
             <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <ListIcon /> : <SearchIcon />}</ListItemIcon>
+              <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <ListIcon/>}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
@@ -98,7 +102,10 @@ export default function MiniDrawer() {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Grid container spacing={0}>
-          <ListContainer newListBtnClicked={newListBtnClicked}/>
+          <ListContainer 
+            newListBtnClicked={newListBtnClicked}
+            cancelBtnHandler={handleCancelNewListFormBtn}
+          />
           {/* <Grid item xs={12} md={6} >
 
           </Grid> */}
