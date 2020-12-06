@@ -1,17 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
+import {Grid, Divider, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, IconButton, ListItem, ListItemText, ListItemIcon} from '@material-ui/core';
+
 import { useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -22,6 +13,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import {useStyles} from './styles.js';
+import ListContainer from '../ActionList/ListContainer.jsx';
 
 
 export default function MiniDrawer() {
@@ -65,7 +57,6 @@ export default function MiniDrawer() {
         </Toolbar>
 
       </AppBar>
-
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -99,6 +90,15 @@ export default function MiniDrawer() {
         </List>
         
       </Drawer>
+      <main className={classes.content}>
+        <div className={classes.toolbar} />
+        <Grid container spacing={0}>
+          <ListContainer/>
+          {/* <Grid item xs={12} md={6} >
+
+          </Grid> */}
+        </Grid>  
+      </main>
     </div>
   );
 }
