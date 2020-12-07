@@ -3,10 +3,10 @@ import {Container} from '@material-ui/core';
 
 import MainContainer from './MainContainer/MainContainer.jsx';
 
-function App() {
+function App(props) {
   return (
     <Container maxWidth='lg'>
-      <MainContainer />
+      <MainContainer createList={props.createList}/>
       
     </Container>
   );

@@ -13,7 +13,9 @@ function ListFormDisplay(props){
                     <NewListHeader/>
                 </Grid>
                 <Grid item xs={12}>
-                    <NewListForm cancelBtnHandler={props.cancelBtnHandler}
+                    <NewListForm 
+                        cancelBtnHandler={props.cancelBtnHandler}
+                        createList={props.createList}
                     />
                 </Grid>
             </Grid>

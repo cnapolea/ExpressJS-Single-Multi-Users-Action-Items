@@ -16,7 +16,7 @@ import {useStyles} from './styles.js';
 import ListContainer from './ListContainer/ListContainer.jsx'
 
 
-export default function MiniDrawer() {
+export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -115,6 +115,7 @@ export default function MiniDrawer() {
           <ListContainer 
             newListBtnClicked={newListBtnClicked}
             cancelBtnHandler={handleCancelNewListFormBtn}
+            createList={props.createList}
           />
           {/* <Grid item xs={12} md={6} >
 
