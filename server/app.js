@@ -10,8 +10,13 @@ import actionItems from './routes/actionItems.js';
 
 const app = express();
 
-app.use(cors())
-    .use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors());
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:3000")});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
     
 // connection to local db
 const dbUri = 'mongodb://localhost/todolistDB' || process.env.REMOTE_DB_URI; 
@@ -24,6 +29,8 @@ mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true})
 mongoose.set('useFindAndModify', false);
 
 app.use('/api', actionItems);
-
+app.get('/', (req, res) => {
+    res.json({message:'You reached the API.'});
+});
 
 // const dbUri = `mongodb+srv://${env.admin_username}:${env.admin_password}@cluster0.rpn4t.mongodb.net/todolistDB?retryWrites=true&w=majority`;
