@@ -6,7 +6,7 @@ import MainContainer from './MainContainer/MainContainer.jsx';
 function App(props) {
   return (
     <Container maxWidth='lg'>
-      <MainContainer createList={props.createList}/>
+      <MainContainer listsAPI={props.listsAPI}/>
       
     </Container>
   );

@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/DeleteRounded';
 
 import useStyles from './styles.js';
 
-function ActionList(){
+function ActionList(props){
 
     const classes = useStyles();
     
@@ -23,14 +23,14 @@ function ActionList(){
                 button
                 selected={selectedIndex === 2}
                 onClick={(event) => handleListItemClick(event, 2)}>
-                    <ListItemText primary="ListName" />
+                    <ListItemText primary={props.name} />
                     <ListItemIcon>
                         <Grid container spacing={1}>
                             <Grid item>
                                 <EditIcon/>    
                             </Grid>
                             <Grid item>
-                                <DeleteIcon button/>
+                                <DeleteIcon button="true"/>
                             </Grid>
                         </Grid>
                     </ListItemIcon>

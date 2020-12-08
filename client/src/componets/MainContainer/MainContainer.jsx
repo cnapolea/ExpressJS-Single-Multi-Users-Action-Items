@@ -113,7 +113,7 @@ export default function MiniDrawer(props) {
           <ListContainer 
             newListBtnClicked={newListBtnClicked}
             cancelBtnHandler={goHomeHandler}
-            createList={props.createList}
+            listsAPI={props.listsAPI}
           />
           {/* <Grid item xs={12} md={6} >
 

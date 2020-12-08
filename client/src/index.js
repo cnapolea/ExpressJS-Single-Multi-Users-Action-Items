@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import App from './componets/App';
-import createList from './api/createList.js'
+import listsAPI from './api/listsAPI.js'
 
-ReactDOM.render( <App createList={createList}/>,document.getElementById('root')
+
+// We are passing the functions that will make the requests to the REST API into out app component
+
+ReactDOM.render( <App listsAPI={listsAPI}/>,document.getElementById('root')
 );

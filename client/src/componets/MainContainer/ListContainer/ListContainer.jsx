@@ -14,11 +14,13 @@ function ListContainer(props){
                 props.newListBtnClicked?
                     <ListFormDisplay cancelBtnHandler={props.cancelBtnHandler}
                         newListBtnClicked={props.newListBtnClicked}
-                        createList={props.createList}
+                        createList={props.listsAPI.createList}
                     />:
                 <>
                     <SearchBar/>
-                    <ListDisplay/>
+                    <ListDisplay 
+                        getLists={props.listsAPI.getLists}
+                    />
                 </>
                 }
             </Grid>
