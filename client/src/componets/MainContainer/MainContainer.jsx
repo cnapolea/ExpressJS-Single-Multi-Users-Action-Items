@@ -12,6 +12,7 @@ import ListIcon from '@material-ui/icons/ListAlt';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
+
 import {useStyles} from './styles.js';
 import ListContainer from './ListContainer/ListContainer.jsx'
 
@@ -39,10 +40,6 @@ export default function MiniDrawer(props) {
 
   const handleNewListBtnClick = () => {
     setNewListBtnClicked(true);
-  }
-
-  const handleHomeClick = () => {
-    goHomeHandler();
   }
 
   return (

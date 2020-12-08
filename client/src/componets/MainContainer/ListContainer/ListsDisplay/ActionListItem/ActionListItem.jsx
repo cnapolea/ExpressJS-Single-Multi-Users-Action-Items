@@ -1,5 +1,8 @@
 import React from 'react';
-import {List, ListItem, ListItemText} from '@material-ui/core/';
+import {Grid, List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core/';
+
+import EditIcon from '@material-ui/icons/EditRounded';
+import DeleteIcon from '@material-ui/icons/DeleteRounded';
 
 import useStyles from './styles.js';
 
@@ -20,7 +23,17 @@ function ActionList(){
                 button
                 selected={selectedIndex === 2}
                 onClick={(event) => handleListItemClick(event, 2)}>
-                <ListItemText primary="ListName" />
+                    <ListItemText primary="ListName" />
+                    <ListItemIcon>
+                        <Grid container spacing={1}>
+                            <Grid item>
+                                <EditIcon/>    
+                            </Grid>
+                            <Grid item>
+                                <DeleteIcon button/>
+                            </Grid>
+                        </Grid>
+                    </ListItemIcon>
                 </ListItem>
             </List>
         </div>
