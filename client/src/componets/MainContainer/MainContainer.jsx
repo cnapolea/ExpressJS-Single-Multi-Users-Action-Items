@@ -32,20 +32,17 @@ export default function MiniDrawer(props) {
     setOpen(false);
   };
 
+  const goHomeHandler = () => {
+    setIsHome(true);
+    setNewListBtnClicked(false);
+  };
+
   const handleNewListBtnClick = () => {
     setNewListBtnClicked(true);
   }
 
-  const handleCancelNewListFormBtn = () => {
-    setNewListBtnClicked(false);
-  }
-
-  const handleHomeListsClick = (btnName) => {
-    if(btnName === 'Home') {
-      setIsHome(true);
-      setNewListBtnClicked(false);
-    }
-
+  const handleHomeClick = () => {
+    goHomeHandler();
   }
 
   return (
@@ -96,12 +93,16 @@ export default function MiniDrawer(props) {
         </div>
         <Divider />
         <List>
-          {['Home', 'My Lists'].map((text, index) => (
-            <ListItem button key={text} onClick={ ()=> handleHomeListsClick(text)}>
-              <ListItemIcon>{index % 2 === 0 ? <HomeIcon /> : <ListIcon/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={goHomeHandler}>
+            <ListItemIcon><HomeIcon/></ListItemIcon>
+            <ListItemText primary='Home' />
+          </ListItem>
+          
+          <ListItem button >
+            <ListItemIcon><ListIcon/></ListItemIcon>
+            <ListItemText primary='My Lists' />
+          </ListItem>
+
           <ListItem button key='Add List' onClick={()=> handleNewListBtnClick()}>
               <ListItemIcon><AddCircleIcon/></ListItemIcon>
               <ListItemText primary='Add List'/>
@@ -114,7 +115,7 @@ export default function MiniDrawer(props) {
         <Grid container spacing={0}>
           <ListContainer 
             newListBtnClicked={newListBtnClicked}
-            cancelBtnHandler={handleCancelNewListFormBtn}
+            cancelBtnHandler={goHomeHandler}
             createList={props.createList}
           />
           {/* <Grid item xs={12} md={6} >
