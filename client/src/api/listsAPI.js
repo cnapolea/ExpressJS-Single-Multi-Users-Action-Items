@@ -5,13 +5,9 @@ const url = 'api/lists';
 const ListsAPI = {
 
   createList: async (data) => {
-    axios({
-        method: 'post', 
-        url: url, 
-        data: await data
-      })
+    axios.post(url, {data: await data})
       .then(res => res.status)
-      .catch(e => e.message);
+      .catch(err => err.message);
   },
   
   getLists: (setStateHandler) => {
@@ -19,10 +15,15 @@ const ListsAPI = {
     .then(res => setStateHandler(res.data))
     .catch(err => {throw err});
   },
+
+  deleteList: async (data) => {
+    axios.delete(url, null, {params: {listId: data}})
+    .then(res => res.status)
+    .catch(err => err.message)
+  }
 }
 
 
 
 export default ListsAPI;
 
-// {actionLists!=='undefined'&&actionLists.map(list => (<h1>{list.name}</h1>))}

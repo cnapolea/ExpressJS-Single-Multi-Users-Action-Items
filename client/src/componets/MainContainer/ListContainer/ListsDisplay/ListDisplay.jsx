@@ -11,10 +11,11 @@ function ListDisplay(props){
         
     const [actionLists, setActionLists] = useState(); 
 
-    useEffect(async() => {
-        await ListsAPI.getLists(setActionLists);
-        await console.log(actionLists); 
-        
+    useEffect(() => {
+        async function fetchLists() {
+            await ListsAPI.getLists(setActionLists);
+        }; 
+        fetchLists();
     }, []);
 
     return (
@@ -24,7 +25,6 @@ function ListDisplay(props){
                     <Grid item xs={12}>
                         <Heading/>
                     </Grid>
-                    
                     {actionLists!==undefined&&actionLists.map(list => 
                         <Grid key={list._id} item xs={12}>
                             <ActionList
