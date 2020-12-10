@@ -1,6 +1,7 @@
 import React from 'react';
 import {TextField, Button} from '@material-ui/core';
 
+import ListsAPI from '../../../api/listsAPI.js';
 import useStyles from './styles.js'
 
 function NewListForm(props){
@@ -22,7 +23,7 @@ function NewListForm(props){
                 description: descriptionValue
             };
 
-            props.createList(listData);            
+            ListsAPI.createList(listData);            
             props.cancelBtnHandler();
         }
     };

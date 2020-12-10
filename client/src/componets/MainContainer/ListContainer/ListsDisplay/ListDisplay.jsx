@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useReducer} from 'react';
 import {Grid, Slide} from '@material-ui/core';
 
 import Heading from './Header.jsx';
@@ -7,21 +7,39 @@ import ActionList from './ActionListItem/ActionListItem';
 
 import ListsAPI from '../../../../api/listsAPI.js';
 
-function ListDisplay(props){
+function ListDisplay(){
+
+    const [actionLists, setActionLists] = useReducer(
+        (state, action) => {
+            switch (action.type) {
+                case 'FETCHING_DATA':
+                    return {...state, fetchingList: true};
+                case 'FETCHING_DATA_SUCESS':
+                    return {...state, fetchingList:false, data:action.data};
+                case 'FATCHING_DATA_FAILURE': 
+                    return {...state, fetchingList:false}
+                default:
+                    break;
+            }
+    }, {data:null})
+    
+    function deleteListHandle (name, listId){
         
-    const [actionLists, setActionLists] = useState(); 
+        const confirmation = window.confirm(`You are about to delete ${name} action list. Press confirm to proceed.`);
 
-    function deleteListHandle (listId){
-        ListsAPI.deleteList(listId);
+            if(confirmation) {
+                setActionLists({type:'FETCHING_DATA'});
+                ListsAPI.deleteList(listId);
+                ListsAPI.getLists(setActionLists);
+            }
+        
     }
-
+    
     useEffect(() => {
-        async function fetchLists() {
-            await ListsAPI.getLists(setActionLists);
-        }; 
-        fetchLists();
-    }, []);
-
+        setActionLists({type:'FETCHING_DATA'});
+        ListsAPI.getLists(setActionLists);
+    },[]);
+    
     return (
         <Slide in direction='right' timeout={{enter:1500, exit:1500}}>
             <Grid item xs={12}>
@@ -29,7 +47,7 @@ function ListDisplay(props){
                     <Grid item xs={12}>
                         <Heading/>
                     </Grid>
-                    {actionLists!==undefined&&actionLists.map((list, i) => 
+                    {actionLists.data && !actionLists.fetchingList?actionLists.data.map((list, i) => 
                         <Grid key={list._id} item xs={12}>
                             <ActionList
                             key={i}
@@ -39,7 +57,7 @@ function ListDisplay(props){
                             deleteHandler = {deleteListHandle}
                             />
                         </Grid>
-                    )}
+                    ):null}
                 </Grid>
             </Grid>
         </Slide>

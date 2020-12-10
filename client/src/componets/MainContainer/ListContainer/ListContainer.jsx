@@ -14,7 +14,6 @@ function ListContainer(props){
                 props.newListBtnClicked?
                     <ListFormDisplay cancelBtnHandler={props.cancelBtnHandler}
                         newListBtnClicked={props.newListBtnClicked}
-                        createList={props.listsAPI.createList}
                     />:
                 <>
                     <SearchBar/>

@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {Grid, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton} from '@material-ui/core/';
+import React, {useState} from 'react';
+import {List, ListItem, ListItemText, ListItemSecondaryAction, IconButton} from '@material-ui/core/';
 
 import EditIcon from '@material-ui/icons/EditRounded';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
@@ -28,7 +28,7 @@ function ActionList(props){
                         <IconButton>
                             <EditIcon/>
                         </IconButton>
-                        <IconButton onClick={()=>alert('Hello')}>
+                        <IconButton onClick={() => props.deleteHandler(props.name, props.id)}>
                             <DeleteIcon/>
                         </IconButton>
                     </ListItemSecondaryAction>
