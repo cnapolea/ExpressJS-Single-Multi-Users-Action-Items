@@ -11,6 +11,10 @@ function ListDisplay(props){
         
     const [actionLists, setActionLists] = useState(); 
 
+    function deleteListHandle (listId){
+        ListsAPI.deleteList(listId);
+    }
+
     useEffect(() => {
         async function fetchLists() {
             await ListsAPI.getLists(setActionLists);
@@ -25,12 +29,14 @@ function ListDisplay(props){
                     <Grid item xs={12}>
                         <Heading/>
                     </Grid>
-                    {actionLists!==undefined&&actionLists.map(list => 
+                    {actionLists!==undefined&&actionLists.map((list, i) => 
                         <Grid key={list._id} item xs={12}>
                             <ActionList
-                            key={list._id}
+                            key={i}
+                            id={list._id}
                             name={list.name}
                             description={list.description}
+                            deleteHandler = {deleteListHandle}
                             />
                         </Grid>
                     )}

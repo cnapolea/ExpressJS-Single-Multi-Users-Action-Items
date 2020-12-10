@@ -1,5 +1,5 @@
-import React from 'react';
-import {Grid, List, ListItem, ListItemText, ListItemIcon} from '@material-ui/core/';
+import React, {useState, useEffect} from 'react';
+import {Grid, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton} from '@material-ui/core/';
 
 import EditIcon from '@material-ui/icons/EditRounded';
 import DeleteIcon from '@material-ui/icons/DeleteRounded';
@@ -10,10 +10,10 @@ function ActionList(props){
 
     const classes = useStyles();
     
-    const [selectedIndex, setSelectedIndex] = React.useState(1);
+    const [listIsClicked, setListIsClicked] = useState();
     
-    const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+    const handleListItemClick = () => {
+        setListIsClicked(prev => !prev);
     };
 
     return(
@@ -21,19 +21,17 @@ function ActionList(props){
             <List component="nav" aria-label="secondary mailbox folder">
                 <ListItem
                 button
-                selected={selectedIndex === 2}
-                onClick={(event) => handleListItemClick(event, 2)}>
+                selected={listIsClicked}
+                onClick={() => handleListItemClick()}>
                     <ListItemText primary={props.name} />
-                    <ListItemIcon>
-                        <Grid container spacing={1}>
-                            <Grid item>
-                                <EditIcon/>    
-                            </Grid>
-                            <Grid item>
-                                <DeleteIcon button="true"/>
-                            </Grid>
-                        </Grid>
-                    </ListItemIcon>
+                    <ListItemSecondaryAction>
+                        <IconButton>
+                            <EditIcon/>
+                        </IconButton>
+                        <IconButton onClick={()=>alert('Hello')}>
+                            <DeleteIcon/>
+                        </IconButton>
+                    </ListItemSecondaryAction>
                 </ListItem>
             </List>
         </div>
