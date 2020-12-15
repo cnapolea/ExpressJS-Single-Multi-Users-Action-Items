@@ -17,9 +17,7 @@ function ListContainer(props){
                     />:
                 <>
                     <SearchBar/>
-                    <ListDisplay 
-                        getLists={props.listsAPI.getLists}
-                    />
+                    <ListDisplay/>
                 </>
                 }
             </Grid>

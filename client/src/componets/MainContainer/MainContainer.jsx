@@ -33,7 +33,7 @@ export default function MiniDrawer(props) {
     setOpen(false);
   };
 
-  const goHomeHandler = () => {
+  const goHomeHandler = async () => {
     setIsHome(true);
     setNewListBtnClicked(false);
   };
@@ -113,7 +113,6 @@ export default function MiniDrawer(props) {
           <ListContainer 
             newListBtnClicked={newListBtnClicked}
             cancelBtnHandler={goHomeHandler}
-            listsAPI={props.listsAPI}
           />
           {/* <Grid item xs={12} md={6} >
 

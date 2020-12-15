@@ -6,6 +6,13 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '100%',
       backgroundColor: theme.palette.background.paper,
     },
+    editInput: {
+      width: '52%',
+      fontSize: '20px',
+      border: 'inherit',
+      backgroundColor: 'inherit',
+      color: 'inherit'
+    }
   }));
 
 export default useStyles;

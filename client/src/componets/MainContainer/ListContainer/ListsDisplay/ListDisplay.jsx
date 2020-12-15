@@ -35,6 +35,7 @@ function ListDisplay(){
         
     }
     
+    
     useEffect(() => {
         setActionLists({type:'FETCHING_DATA'});
         ListsAPI.getLists(setActionLists);
