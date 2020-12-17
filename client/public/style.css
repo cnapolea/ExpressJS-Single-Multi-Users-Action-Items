@@ -1,0 +1,4 @@
+#editInput:focus {
+    outline: none;
+    background-color: white;
+}

@@ -12,6 +12,9 @@ function ActionList(props){
 
     const classes = useStyles();
     
+    // captures when input field is focused
+    const [editIsFocused, setEditIsFocused] = useState(false);
+
     // Capture state change of edit input field
     const [updatedListName, setListName] = useState();
     
@@ -50,12 +53,16 @@ function ActionList(props){
         setListName(newName);
     };
 
+    const onFocusHandler = () => {
+        setEditIsFocused(true);
+    }
+
     return(
         <div className={classes.root}>
             <List component="nav" aria-label="secondary mailbox folder">
                 <ListItem button selected={listIsClicked} onClick={handleListItemClick}>
                     {edit.btnClicked?
-                        <input className={classes.editInput} name="editInput" type="text" placeholder={props.name} onChange={(e) => console.log(e.target.value)} value={updatedListName} autoFocus/>:
+                        <input className={classes.editInput} id="editInput" onFocus={onFocusHandler} name="editInput" type="text" placeholder={props.name} onChange={(e) => console.log(e.target.value)} value={updatedListName} autoFocus/>:
                         <ListItemText primary={props.name}/>
                     }
                     

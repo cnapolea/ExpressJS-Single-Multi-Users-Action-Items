@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
       border: 'inherit',
       backgroundColor: 'inherit',
       color: 'inherit'
-    }
+    },
+    
   }));
 
 export default useStyles;
