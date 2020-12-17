@@ -61,11 +61,15 @@ function ActionList(props){
                     
                     <ListItemSecondaryAction>    
                         {edit.btnClicked?
-                            <IconButton><ConfirmIcon/></IconButton>:
+                            <Zoom in={edit.btnClicked}>
+                                <IconButton><ConfirmIcon/></IconButton>
+                            </Zoom>:
                             <IconButton onClick={editClickHandler}><EditIcon/></IconButton>
                         }
                         {edit.btnClicked?
-                            <IconButton onClick={cancelEditHandler}><CancelIcon/></IconButton>:
+                            <Zoom in={edit.btnClicked}>
+                                <IconButton onClick={cancelEditHandler}><CancelIcon/></IconButton>
+                            </Zoom>:
                             <IconButton onClick={() => props.deleteHandler(props.name, props.id)}><DeleteIcon/></IconButton>
                         }
                         
