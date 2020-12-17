@@ -35,6 +35,15 @@ function ListDisplay(){
         
     }
     
+    function updateListNameHandle (listId, data) {
+        const confirmation = window.confirm('You are renaming this list. Should we proceed?');
+
+        if (confirmation) {
+            setActionLists({type:'FETCHING_DATA'});
+            ListsAPI.updateList(listId, data);
+            ListsAPI.getLists(setActionLists);
+        }
+    }
     
     useEffect(() => {
         setActionLists({type:'FETCHING_DATA'});

@@ -18,11 +18,16 @@ const ListsAPI = {
     .catch(err => {throw err});
   },
 
-  deleteList: async (data) => {
-    axios.delete(url + `/${data}`)
+  deleteList: async (listId) => {
+    axios.delete(url + `/${listId}`)
     .then(res => res)
     .catch(err => err.message)
-  }
+  },
+  updateList: async (listId, data)=> {
+    axios.patch(url+`/${listId}`, data)
+    .then(res => res)
+    .catch(err => {throw err})
+  },
 }
 
 
