@@ -11,12 +11,9 @@ import useStyles from './styles.js';
 function ActionList(props){
 
     const classes = useStyles();
-    
-    // captures when input field is focused
-    const [editIsFocused, setEditIsFocused] = useState(false);
 
     // Capture state change of edit input field
-    const [updatedListName, setListName] = useState();
+    const [updatedListName, setListName] = useState('');
     
     // Checks if the list selected was clicked or not
     const [listIsClicked, setListIsClicked] = useState();
@@ -48,28 +45,24 @@ function ActionList(props){
         setEditOn({type:'CANCEL_EDIT'});
     };
 
-    const confirmEditHandler = (e) => {
-        const [newName] = e.target.value;
-        setListName(newName);
+    const confirmEditHandler = () => {
+        props.updateHandler(props.id, {name: updatedListName});
+        setEditOn({type:'MAKE_UPDATE'});
     };
-
-    const onFocusHandler = () => {
-        setEditIsFocused(true);
-    }
 
     return(
         <div className={classes.root}>
             <List component="nav" aria-label="secondary mailbox folder">
                 <ListItem button selected={listIsClicked} onClick={handleListItemClick}>
                     {edit.btnClicked?
-                        <input className={classes.editInput} id="editInput" onFocus={onFocusHandler} name="editInput" type="text" placeholder={props.name} onChange={(e) => console.log(e.target.value)} value={updatedListName} autoFocus/>:
+                        <input className={classes.editInput} id="editInput" name="editInput" type="text" placeholder={props.name} onChange={e => setListName(e.target.value)} value={updatedListName} autoFocus required/>:
                         <ListItemText primary={props.name}/>
                     }
                     
                     <ListItemSecondaryAction>    
                         {edit.btnClicked?
                             <Zoom in={edit.btnClicked}>
-                                <IconButton><ConfirmIcon/></IconButton>
+                                <IconButton onClick={confirmEditHandler}><ConfirmIcon/></IconButton>
                             </Zoom>:
                             <IconButton onClick={editClickHandler}><EditIcon/></IconButton>
                         }

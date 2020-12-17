@@ -42,6 +42,7 @@ function ListDisplay(){
             setActionLists({type:'FETCHING_DATA'});
             ListsAPI.updateList(listId, data);
             ListsAPI.getLists(setActionLists);
+            document.location.reload();
         }
     }
     
@@ -65,6 +66,7 @@ function ListDisplay(){
                             name={list.name}
                             description={list.description}
                             deleteHandler = {deleteListHandle}
+                            updateHandler = {updateListNameHandle}
                             />
                         </Grid>
                     ):null}
