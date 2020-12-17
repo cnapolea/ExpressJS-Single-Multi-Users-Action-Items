@@ -30,7 +30,7 @@ mongoose.set('useFindAndModify', false);
 
 app.use('/api', actionItems);
 app.get('/', (req, res) => {
-    res.json({message:'You reached the API.'});
+    res.send('Welcome to Nizzer\' API.');
 });
 
 // const dbUri = `mongodb+srv://${env.admin_username}:${env.admin_password}@cluster0.rpn4t.mongodb.net/todolistDB?retryWrites=true&w=majority`;
