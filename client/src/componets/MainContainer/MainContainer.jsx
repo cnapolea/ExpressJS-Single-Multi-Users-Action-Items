@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from 'clsx';
-import {Grid, Divider, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, IconButton, ListItem, ListItemText, ListItemIcon} from '@material-ui/core';
+import {Grid, Divider, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, IconButton, ListItem, ListItemText, ListItemIcon, Zoom} from '@material-ui/core';
 
 import { useTheme } from '@material-ui/core/styles';
 
@@ -20,10 +20,10 @@ import ListContainer from './ListContainer/ListContainer.jsx'
 export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [isHome, setIsHome] = React.useState(false);
-  const [newListBtnClicked, setNewListBtnClicked] = React.useState(false);
-
+  const [open, setOpen] = useState(false);
+  const [isHome, setIsHome] = useState(false);
+  const [newListBtnClicked, setNewListBtnClicked] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -41,6 +41,10 @@ export default function MiniDrawer(props) {
   const handleNewListBtnClick = () => {
     setNewListBtnClicked(true);
   }
+
+  const listSelectedHandler = () => {
+    setIsSelected(prev => !prev);
+  };
 
   return (
     <div className={classes.root}>
@@ -109,14 +113,33 @@ export default function MiniDrawer(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        
+        
         <Grid container spacing={0}>
-          <ListContainer 
-            newListBtnClicked={newListBtnClicked}
-            cancelBtnHandler={goHomeHandler}
-          />
-          {/* <Grid item xs={12} md={6} >
+          {isSelected?
+          <>
+          <Grid item xs={12} md={6}>
+              <ListContainer 
+                newListBtnClicked={newListBtnClicked}
+                listSelected = {listSelectedHandler}
+                cancelBtnHandler={goHomeHandler}
+              />
+            </Grid >
+            <Zoom in={isSelected}>
+              <Grid item md={6}>
 
-          </Grid> */}
+              </Grid>
+            </Zoom>
+          </>: 
+            <Grid item xs={12} md={12}>
+            <ListContainer 
+              newListBtnClicked={newListBtnClicked}
+              listSelected = {listSelectedHandler}
+              cancelBtnHandler={goHomeHandler}
+            />
+          </Grid >
+          }
+          
         </Grid>  
       </main>
     </div>

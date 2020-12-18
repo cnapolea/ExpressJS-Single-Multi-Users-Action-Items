@@ -7,7 +7,7 @@ import ActionList from './ActionListItem/ActionListItem';
 
 import ListsAPI from '../../../../api/listsAPI.js';
 
-function ListDisplay(){
+function ListDisplay(props){
 
     const [actionLists, setActionLists] = useReducer(
         (state, action) => {
@@ -67,6 +67,7 @@ function ListDisplay(){
                             description={list.description}
                             deleteHandler = {deleteListHandle}
                             updateHandler = {updateListNameHandle}
+                            listSelected = {props.listSelected}
                             />
                         </Grid>
                     ):null}

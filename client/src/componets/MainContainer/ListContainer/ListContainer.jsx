@@ -17,7 +17,9 @@ function ListContainer(props){
                     />:
                 <>
                     <SearchBar/>
-                    <ListDisplay/>
+                    <ListDisplay
+                        listSelected = {props.listSelected}
+                    />
                 </>
                 }
             </Grid>

@@ -13,7 +13,7 @@ const ListsAPI = {
   getLists: (setStateHandler) => {
     axios.get(url)
     .then(res => {
-      setStateHandler({type:'FETCHING_DATA_SUCESS', data: res.data});
+      setStateHandler({type:'FETCHING_DATA_SUCESS', data: res.data.slice(0,5)});
     })
     .catch(err => {throw err});
   },

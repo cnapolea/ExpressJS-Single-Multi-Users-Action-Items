@@ -14,7 +14,7 @@ function NewListForm(props){
     const handleDescriptionChange = e => {setDescriptionValue(e.target.value);};
     
     const handleFormSubmission = async () => {
-        // console.log('I was clicked');
+        
         if(listName === '' || descriptionValue === '') {
             alert("You must fill in the Name and Description field.");
         } else {

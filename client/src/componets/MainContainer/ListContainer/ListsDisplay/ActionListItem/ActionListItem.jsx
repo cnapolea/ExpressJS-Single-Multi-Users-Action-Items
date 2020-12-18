@@ -35,6 +35,7 @@ function ActionList(props){
     
     const handleListItemClick = () => {
         setListIsClicked(prev => !prev);
+        props.listSelected();
     };
 
     const editClickHandler = () => {
