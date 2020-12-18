@@ -3,7 +3,7 @@ import Lists from '../models/lists.js';
 export const getActionLists = async (req, res) => {
     
     try {
-        const actionLists = await Lists.find();
+        const actionLists = await Lists.find().sort({date_created:'desc'});
 
         res.status(200).json(actionLists);
         
