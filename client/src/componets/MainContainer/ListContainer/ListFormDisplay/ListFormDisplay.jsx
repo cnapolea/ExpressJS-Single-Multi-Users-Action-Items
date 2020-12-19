@@ -1,8 +1,10 @@
+//jshint esversion:6
+
 import React from 'react';
 import {Grid, Slide} from '@material-ui/core'
 
 import NewListHeader from './NewListHeader.jsx';
-import NewListForm from '../../../Forms/NewListForm/NewListForm.jsx'
+import NewListForm from '../../../Forms/NewListForm/newListForm'
 
 
 function ListFormDisplay(props){

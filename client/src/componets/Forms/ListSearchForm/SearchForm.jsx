@@ -6,7 +6,6 @@ function ListSearchForm(){
         <form onSubmit={e => e.preventDefault()}>
             <TextField
                id="standard-full-width"
-               style={{ margin: 8 }}
                placeholder="Look For A List"  
                fullWidth
                margin="normal"
