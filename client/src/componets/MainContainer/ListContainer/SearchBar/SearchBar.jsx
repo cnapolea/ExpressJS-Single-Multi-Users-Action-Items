@@ -6,13 +6,16 @@ import Grid from '@material-ui/core/Grid';
 import ListSearchForm from '../../../Forms/ListSearchForm/SearchForm.jsx';
 import { useStyles } from './styles';
 
-function SearchBar(){
+function SearchBar(props){
 
     const classes= useStyles();
 
     return (
-        <Grid item xs={12}>
-            <ListSearchForm className={classes.root}/>
+        <Grid item xs={12} style={{paddingBottom:props.bottomPadding}}>
+            <ListSearchForm 
+                className={classes.root}
+                searchHandler={props.searchHandler}
+            />
         </Grid>)
 }
 
