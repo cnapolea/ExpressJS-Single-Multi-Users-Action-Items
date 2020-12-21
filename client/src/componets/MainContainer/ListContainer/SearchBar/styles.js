@@ -10,4 +10,15 @@ export const useStyles = makeStyles({
         margin: '0',
 
     },
+
+    listFoundGrid: {
+        width:'100%',
+        paddingTop:'0 !important',
+    },
+    listsFoundContainer: {
+        backgroundColor: '#fff',
+        listStyle: 'none',
+        fontSize: '1rem',
+        margin:0,
+    }
 });

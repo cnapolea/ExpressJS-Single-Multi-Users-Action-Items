@@ -1,3 +1,5 @@
+// jshint esversion:6
+
 import React, {useState} from 'react';
 import clsx from 'clsx';
 import {Grid, Divider, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, IconButton, ListItem, ListItemText, ListItemIcon, Zoom} from '@material-ui/core';
@@ -21,6 +23,8 @@ export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+
+  // eslint-disable-next-line
   const [isHome, setIsHome] = useState(false);
   const [newListBtnClicked, setNewListBtnClicked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);

@@ -1,17 +1,15 @@
 // jshint esversion:6
 
 import React, {useState} from 'react';
-import {Grid, Collapse} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 
 import SearchBar from './SearchBar/SearchBar.jsx';
+import {ListDropDown} from './SearchBar/SearchListDropDown';
 import ListDisplay from './ListsDisplay/ListDisplay.jsx';
 import ListFormDisplay from './ListFormDisplay/ListFormDisplay.jsx';
 
-import {useStyles} from './styles';
-
 function ListContainer(props){
 
-    const classes = useStyles();
     const [isSearching, setSearchStatus] = useState(false);
     
     const searchHandler = (e) => {
@@ -36,16 +34,7 @@ function ListContainer(props){
                     <SearchBar searchHandler={searchHandler}
                         bottomPadding = {isSearching&&0}
                     />
-                    <Grid item md={12} className={classes.listFoundGrid}>
-                        <Collapse in={isSearching} timeout={1000}>
-                            <ul className={classes.listsFoundContainer}>
-                                <li>List 1</li>
-                                <li>List 2</li>
-                                <li>List 3</li>
-                            </ul>
-                        </Collapse>
-                    </Grid>
-                    
+                    <ListDropDown searchStatus={isSearching}/>
                     <ListDisplay
                         listSelected = {props.listSelected}
                     />
