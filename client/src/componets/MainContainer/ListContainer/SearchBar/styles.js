@@ -20,5 +20,9 @@ export const useStyles = makeStyles({
         listStyle: 'none',
         fontSize: '1rem',
         margin:0,
+    },
+
+    showList: {
+        hidden: 'true',
     }
 });
