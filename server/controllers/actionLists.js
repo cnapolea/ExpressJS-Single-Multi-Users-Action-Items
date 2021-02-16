@@ -1,75 +1,75 @@
-import Lists from '../models/lists.js';
+// jshint esversion:8
+
+import Lists from "../models/lists.js";
 
 export const getActionLists = async (req, res) => {
-    
-    try {
-        const actionLists = await Lists.find().sort({date_created:'desc'});
+  try {
+    const actionLists = await Lists.find().sort({ date_created: "desc" });
 
-        res.status(200).json(actionLists);
-        
-    } catch (err) {
-        res.status(404).json({message: err.message});
-    }
-    
+    res.status(200).json(actionLists);
+  } catch (err) {
+    res.status(404).json({ message: err.message });
+  }
 };
 
 export const createActionList = async (req, res) => {
-    const listFields = await req.body;
-    try {
-        const newActionList = new Lists(listFields);
-        
-        newActionList.save((err) => {
-            if (err) {
-                throw err
-            } else {
-                res.status(201).json(this);
-            }
-        })
-    } catch (err) {
-        res.status(409).json({message: err.message});
-    }
+  const listFields = await req.body;
+  try {
+    const newActionList = new Lists(listFields);
+
+    newActionList.save((err) => {
+      if (err) {
+        throw err;
+      } else {
+        res.status(201).json(this);
+      }
+    });
+  } catch (err) {
+    res.status(409).json({ message: err.message });
+  }
 };
 
 export const deleteActionLists = async (req, res) => {
-
-    try {
-        Lists.remove();
-        res.status(200).json({message: 'Deleted all action lists.'});
-        
-    } catch (err) {
-        res.status(400).json({message: err.message});
-    }
+  try {
+    Lists.remove();
+    res.status(200).json({ message: "Deleted all action lists." });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 export const updateActionList = async (req, res) => {
-    try {
-        const actionListId = await req.params.listId;
+  try {
+    const actionListId = await req.params.listId;
 
-        // The client will be sending an object with the fields to be updated in the action lists. the names of the input should match the model's field names
-        const data = await req.body
-        Lists.updateOne({_id : actionListId}, data, (err) => {
-            if (err) {throw err}
-            else {
-                res.status(202).json({message: 'Your action list was updated successfully'});
-            };
-        });
-
-    } catch (err) {
-        res.status(409).json({message: err.message});
-    }
-}
+    // The client will be sending an object with the fields to be updated in the action lists. the names of the input should match the model's field names
+    const data = await req.body;
+    Lists.updateOne({ _id: actionListId }, data, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        res
+          .status(202)
+          .json({ message: "Your action list was updated successfully" });
+      }
+    });
+  } catch (err) {
+    res.status(409).json({ message: err.message });
+  }
+};
 
 export const deleteActionList = async (req, res) => {
-    try {
-        const actionListId = req.params.listId;
+  try {
+    const actionListId = req.params.listId;
 
-        Lists.deleteOne({_id: actionListId}, (err) => {
-            if(err) {throw err}
-            else {
-                res.status(202).json({message: 'List deleted successfully.'});
-            }
-        });
-    } catch (error) {
-        res.status(409).json({message: err.message});
-    }
-}
+    Lists.deleteOne({ _id: actionListId }, (err) => {
+      if (err) {
+        throw err;
+      } else {
+        res.status(202).json({ message: "List deleted successfully." });
+      }
+    });
+  } catch (error) {
+    res.status(409).json({ message: err.message });
+  }
+};

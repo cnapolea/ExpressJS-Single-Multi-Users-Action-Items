@@ -1,8 +1,8 @@
-// jshint esversion:6
+// jshint esversion:8
 
 import React, {useState} from 'react';
 import clsx from 'clsx';
-import {Grid, Divider, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, IconButton, ListItem, ListItemText, ListItemIcon, Zoom} from '@material-ui/core';
+import {Grid, Divider, Drawer, AppBar, Toolbar, List, CssBaseline, Typography, IconButton, ListItem, ListItemText, ListItemIcon, Slide} from '@material-ui/core';
 
 import { useTheme } from '@material-ui/core/styles';
 
@@ -28,6 +28,7 @@ export default function MiniDrawer(props) {
   const [isHome, setIsHome] = useState(false);
   const [newListBtnClicked, setNewListBtnClicked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
+  const [notSelected, setNotSelected] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,33 +119,23 @@ export default function MiniDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         
-        
         <Grid container spacing={0}>
-          {isSelected?
-          <>
-          <Grid item xs={12} md={6}>
-              <ListContainer 
-                newListBtnClicked={newListBtnClicked}
-                listSelected = {listSelectedHandler}
-                cancelBtnHandler={goHomeHandler}
-              />
-            </Grid >
-            <Zoom in={isSelected}>
-              <Grid item md={6}>
-
-              </Grid>
-            </Zoom>
-          </>: 
-            <Grid item xs={12} md={12}>
+          <Grid item xs={12} md={isSelected?6:12}>
             <ListContainer 
               newListBtnClicked={newListBtnClicked}
               listSelected = {listSelectedHandler}
               cancelBtnHandler={goHomeHandler}
             />
           </Grid >
-          }
+          <Slide in={isSelected} direction="left">
+            <Grid item md={6}>
+              {/* <h1>Actions</h1> */}
+            </Grid>
+          </Slide>
+        
+        </Grid>
           
-        </Grid>  
+          
       </main>
     </div>
   );

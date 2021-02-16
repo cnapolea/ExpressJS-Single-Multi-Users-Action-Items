@@ -11,7 +11,7 @@ export const ListDropDown = (props) => {
   return (   
     <Grid item md={12} className={classes.listFoundGrid}>
         <List className={classes.listsFoundContainer}>
-            <ListItem>List 3</ListItem>
+            
         </List>
     </Grid>
   );

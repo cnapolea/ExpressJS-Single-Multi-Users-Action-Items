@@ -1,3 +1,5 @@
+//jshint esversion:10
+
 import React, {useState, useReducer} from 'react';
 import {List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Zoom} from '@material-ui/core/';
 
@@ -19,7 +21,7 @@ function ActionList(props){
     const [listIsClicked, setListIsClicked] = useState();
     
     const [edit, setEditOn] =  useReducer((currentState, action) => {
-        // This reducer controls the state of the edit input field
+        // This reducer controls the state of the edit input fields
         switch (action.type) {
             case 'EDIT_FIELD':
                 return {...currentState, btnClicked:true}

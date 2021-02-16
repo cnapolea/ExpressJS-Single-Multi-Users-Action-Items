@@ -1,3 +1,6 @@
+// jshint esversion:10
+
+
 import axios from 'axios';
 
 const url = 'api/lists';
@@ -10,12 +13,16 @@ const ListsAPI = {
       .catch(err => err.message);
   },
   
-  getLists: (setStateHandler) => {
+  getLists: async (setStateHandler) => {
     axios.get(url)
     .then(res => {
-      setStateHandler({type:'FETCHING_DATA_SUCESS', data: res.data.slice(0,5)});
+      if (res.status === 200) {
+        setStateHandler({type:'FETCHING_DATA_SUCCESS', data: res.data});
+      } else {
+        setStateHandler({type:'FETCHING_DATA_FAILURE'});
+      }
     })
-    .catch(err => {throw err});
+    .catch(err => {throw err;});
   },
 
   deleteList: async (listId) => {
@@ -26,7 +33,7 @@ const ListsAPI = {
   updateList: async (listId, data)=> {
     axios.patch(url+`/${listId}`, data)
     .then(res => res)
-    .catch(err => {throw err})
+    .catch(err => {throw err;});
   },
 }
 

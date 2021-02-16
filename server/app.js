@@ -17,10 +17,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
     
 // connection to local db
-const DB_URL = process.env.DB_URL; 
+const DB_URI = process.env.DB_URI; 
 const PORT = process.env.PORT || 8080;
 
-mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true})
     .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
     .catch(err => console.log(err));
 
