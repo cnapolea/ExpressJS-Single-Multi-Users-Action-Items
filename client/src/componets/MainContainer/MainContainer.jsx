@@ -16,7 +16,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 
 import {useStyles} from './styles.js';
-import ListContainer from './ListContainer/ListContainer.jsx'
+import ListContainer from './ActionList/ListContainer.jsx'
 
 
 export default function MiniDrawer(props) {
@@ -28,7 +28,7 @@ export default function MiniDrawer(props) {
   const [isHome, setIsHome] = useState(false);
   const [newListBtnClicked, setNewListBtnClicked] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
-  const [notSelected, setNotSelected] = useState(true);
+  // const [notSelected, setNotSelected] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -45,7 +45,7 @@ export default function MiniDrawer(props) {
 
   const handleNewListBtnClick = () => {
     setNewListBtnClicked(true);
-  }
+  };
 
   const listSelectedHandler = () => {
     setIsSelected(prev => !prev);
@@ -129,7 +129,7 @@ export default function MiniDrawer(props) {
           </Grid >
           <Slide in={isSelected} direction="left">
             <Grid item md={6}>
-              {/* <h1>Actions</h1> */}
+              
             </Grid>
           </Slide>
         
